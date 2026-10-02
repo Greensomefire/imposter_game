@@ -79,17 +79,29 @@
   gap: 8px;
 }
 
-.name-list .dot {
+.name-list .avatar {
   flex: none;
-  width: 34px;
-  height: 34px;
+  width: 56px;
+  height: 56px;
+  padding: 0;
   border: 3px solid var(--line);
   border-radius: 50%;
   display: grid;
   place-items: center;
-  font-weight: 800;
-  font-size: 0.9rem;
-  color: #2b2140;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--line);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.name-list .avatar:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--line); }
+
+.name-list .avatar.spin { animation: avatar-spin 0.3s ease-out; }
+
+@keyframes avatar-spin {
+  from { transform: rotate(-180deg) scale(0.4); }
+  to { transform: none; }
 }
 
 .how-to {
@@ -149,6 +161,28 @@
 }
 
 .answer-field label { display: block; margin-bottom: 6px; }
+
+.hint-after { margin: 12px 0 0; }
+
+/* While answering, hide the header, title and footer so the question, the
+   input and the button all fit above the on-screen keyboard. */
+body[data-screen="screen-question"] .site-header,
+body[data-screen="screen-question"] .game-title,
+body[data-screen="screen-question"] .site-footer {
+  display: none;
+}
+
+body[data-screen="screen-question"] main { padding-top: 12px; }
+
+@media (max-height: 640px) {
+  .secret { padding: 16px; }
+  .secret .step { margin-bottom: 4px; font-size: 0.85rem; }
+  .secret .question-text { font-size: clamp(1.25rem, 5.5vw, 1.6rem); margin: 4px 0 12px; }
+  .answer-field { margin-bottom: 10px; }
+  .answer-field label { margin-bottom: 4px; font-size: 1rem; }
+  .secret .btn { min-height: 52px; font-size: 1.15rem; }
+  .hint-after { display: none; }
+}
 
 /* Answer lists */
 .answer-list {

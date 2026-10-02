@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
   <title>Odd Question · Party Games</title>
   <meta name="description" content="Everyone gets the same question except one. Find the odd one out.">
   <link rel="icon" href="../../assets/images/logo.svg" type="image/svg+xml">
@@ -41,7 +41,7 @@
         </div>
 
         <div class="field">
-          <span class="label">Names <small>(optional)</small></span>
+          <span class="label">Names <small>(optional, tap a picture to change it)</small></span>
           <ol class="name-list" id="name-list"></ol>
         </div>
 
@@ -68,7 +68,7 @@
 
       <!-- 2b. Confirm it's the right player -->
       <section class="screen card center" id="screen-pass" hidden>
-        <div class="big-emoji" aria-hidden="true">📱</div>
+        <div class="big-emoji" id="pass-avatar" aria-hidden="true"></div>
         <h2>Are you <span class="name-tag" id="pass-name"></span>?</h2>
         <p class="hint">Make sure nobody else can see the screen.</p>
         <div class="actions">
@@ -83,10 +83,10 @@
         <p class="question-text" id="question-text"></p>
         <div class="answer-field">
           <label for="answer-input">Your answer</label>
-          <input type="text" id="answer-input" maxlength="80" autocomplete="off">
+          <input type="text" id="answer-input" maxlength="80" autocomplete="off" enterkeyhint="done">
         </div>
-        <p class="hint">Type your answer, then hide it before passing the phone on.</p>
         <button type="button" class="btn btn-block" id="hide-btn">Save answer &amp; hide</button>
+        <p class="hint hint-after">Then pass the phone on.</p>
       </section>
 
       <!-- 4. Question + everyone's answers -->
@@ -100,7 +100,7 @@
 
       <!-- 5. Reveal -->
       <section class="screen card center" id="screen-reveal" hidden>
-        <div class="big-emoji" aria-hidden="true">🕵️</div>
+        <div class="big-emoji" id="reveal-avatar" aria-hidden="true"></div>
         <h2>The odd one out was <span class="name-tag" id="reveal-odd-name"></span></h2>
         <p class="reveal-answer">They answered: <strong id="reveal-odd-answer"></strong></p>
         <div class="q-compare">

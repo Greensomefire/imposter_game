@@ -9,12 +9,19 @@
   var MAX_PLAYERS = 12;
   var DECK_KEY = "odd-question:deck";
   var DOT_COLORS = ["#ff4f8b", "#3a86ff", "#2ec4b6", "#ff9f1c", "#8338ec", "#ffd23f"];
+  var EMOJIS = [
+    "🐶", "🐱", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐸", "🐵", "🐧", "🐙",
+    "🦄", "🐲", "🦖", "🐢", "🦉", "🐝", "🦋", "🐳", "🦀", "🐷", "🐰", "🦔",
+    "👽", "🤖", "👻", "🤠", "🥷", "🧙", "🧛", "🧜", "🍕", "🌮", "🍩", "🍉",
+    "🌵", "🌻", "🍄", "⚡", "🔥", "🌈", "⭐", "🎸", "🚀", "🎩", "👑", "💎"
+  ];
 
   var QUESTIONS = window.ODD_QUESTIONS || [];
 
   var state = {
     count: 4,
     names: [],          // custom names typed in setup (may be blank)
+    avatars: [],        // emoji picture for each player slot
     players: [],        // resolved names for the current game
     pair: null,
     oddIndex: -1,
@@ -70,6 +77,8 @@
     document.querySelectorAll(".screen").forEach(function (screen) {
       screen.hidden = screen.id !== id;
     });
+    // Lets CSS hide the page chrome on the private question screen.
+    document.body.setAttribute("data-screen", id);
     window.scrollTo(0, 0);
     var target = $(id);
     var focusable = target.querySelector("h2, .question-text, .step");
@@ -108,6 +117,17 @@
 
   /* --- Setup ------------------------------------------------------------ */
 
+  // A random emoji that no other player (except `slot` itself) is using.
+  function randomAvatar(slot) {
+    var taken = state.avatars.filter(function (_, i) { return i !== slot && i < state.count; });
+    var free = EMOJIS.filter(function (e) { return taken.indexOf(e) === -1 && e !== state.avatars[slot]; });
+    return free[randomInt(free.length)];
+  }
+
+  function label(player) {
+    return state.avatars[player] + " " + state.players[player];
+  }
+
   function renderNameInputs() {
     var list = $("name-list");
     // Keep whatever has been typed so far before re-rendering.
@@ -117,9 +137,16 @@
     clear(list);
 
     for (var i = 0; i < state.count; i++) {
-      var dot = span(String(i + 1), "dot");
-      dot.style.background = DOT_COLORS[i % DOT_COLORS.length];
-      dot.setAttribute("aria-hidden", "true");
+      if (!state.avatars[i] || state.avatars.slice(0, i).indexOf(state.avatars[i]) !== -1) {
+        state.avatars[i] = randomAvatar(i);
+      }
+      var avatar = document.createElement("button");
+      avatar.type = "button";
+      avatar.className = "avatar";
+      avatar.textContent = state.avatars[i];
+      avatar.style.background = DOT_COLORS[i % DOT_COLORS.length];
+      avatar.setAttribute("aria-label", "Change picture for player " + (i + 1));
+      avatar.addEventListener("click", changeAvatar.bind(null, i, avatar));
 
       var input = document.createElement("input");
       input.type = "text";
@@ -129,12 +156,20 @@
       input.setAttribute("aria-label", "Name of player " + (i + 1));
       input.value = state.names[i] || "";
 
-      list.appendChild(li([dot, input]));
+      list.appendChild(li([avatar, input]));
     }
 
     $("count-value").textContent = state.count;
     $("count-minus").disabled = state.count <= MIN_PLAYERS;
     $("count-plus").disabled = state.count >= MAX_PLAYERS;
+  }
+
+  function changeAvatar(slot, button) {
+    state.avatars[slot] = randomAvatar(slot);
+    button.textContent = state.avatars[slot];
+    button.classList.remove("spin");
+    void button.offsetWidth; // restart the animation
+    button.classList.add("spin");
   }
 
   function changeCount(delta) {
@@ -182,10 +217,10 @@
       if (state.answers[i]) {
         btn.className += " is-done";
         btn.disabled = true;
-        btn.textContent = "✓ " + name;
+        btn.textContent = "✓ " + label(i);
         btn.setAttribute("aria-label", name + ", already answered");
       } else {
-        btn.textContent = name;
+        btn.textContent = label(i);
         btn.addEventListener("click", function () { showPass(i); });
       }
       grid.appendChild(btn);
@@ -195,13 +230,14 @@
 
   function showPass(player) {
     state.turn = player;
+    $("pass-avatar").textContent = state.avatars[player];
     $("pass-name").textContent = state.players[player];
     showScreen("screen-pass");
   }
 
   function revealQuestion() {
     var isOdd = state.turn === state.oddIndex;
-    $("question-name").textContent = state.players[state.turn];
+    $("question-name").textContent = label(state.turn);
     $("question-text").textContent = isOdd ? state.pair.odd : state.pair.main;
     $("answer-input").value = "";
     showScreen("screen-question");
@@ -229,7 +265,7 @@
   function fillAnswerList(list) {
     clear(list);
     state.players.forEach(function (name, i) {
-      list.appendChild(li([span(name, "who"), span(state.answers[i], "what")]));
+      list.appendChild(li([span(label(i), "who"), span(state.answers[i], "what")]));
     });
   }
 
@@ -242,6 +278,7 @@
   /* --- Reveal ----------------------------------------------------------- */
 
   function showReveal() {
+    $("reveal-avatar").textContent = state.avatars[state.oddIndex];
     $("reveal-odd-name").textContent = state.players[state.oddIndex];
     $("reveal-odd-answer").textContent = state.answers[state.oddIndex];
     $("reveal-odd-question").textContent = state.pair.odd;
