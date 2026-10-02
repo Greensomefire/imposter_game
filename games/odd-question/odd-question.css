@@ -1,0 +1,271 @@
+/* Odd Question: game-specific styles */
+
+.narrow { max-width: 560px; }
+
+.game-title {
+  text-align: center;
+  color: var(--purple);
+  margin: 4px 0 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .game-title { color: var(--yellow); }
+}
+
+.screen { animation: pop-in 0.25s ease-out; }
+.screen[hidden] { display: none; }
+.center { text-align: center; }
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.field {
+  margin: 0 0 22px;
+  padding: 0;
+  border: 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.label small { font-weight: 400; color: var(--ink-soft); }
+
+/* Player count stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.stepper-btn {
+  width: 64px;
+  min-height: 64px;
+  padding: 0;
+  font-size: 2rem;
+}
+
+#count-value {
+  min-width: 2.5ch;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--pink);
+}
+
+/* Name inputs */
+.name-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 520px) {
+  .name-list { grid-template-columns: 1fr 1fr; }
+}
+
+.name-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name-list .dot {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 3px solid var(--line);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #2b2140;
+}
+
+/* Answer mode */
+.mode-choice { display: grid; gap: 10px; }
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 16px;
+  border: 3px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.radio input { width: 24px; height: 24px; accent-color: var(--purple); }
+.radio:has(input:checked) { background: var(--yellow); color: #2b2140; }
+
+.how-to {
+  margin-top: 20px;
+  color: var(--ink-soft);
+}
+
+.how-to summary {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* Pass / question screens */
+.step {
+  font-weight: 800;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+}
+
+.big-emoji {
+  font-size: 4.5rem;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.name-tag {
+  display: inline-block;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: var(--yellow);
+  color: #2b2140;
+  word-break: break-word;
+}
+
+.hint { color: var(--ink-soft); }
+
+.secret { border-color: var(--purple); background: var(--purple); color: #fff; }
+.secret .step, .secret .hint { color: #e8dbff; }
+.secret .btn { background: var(--yellow); color: #2b2140; }
+
+.question-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 10px 0 22px;
+}
+
+.answer-field {
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.answer-field label { display: block; margin-bottom: 6px; }
+
+/* Answer lists */
+.order-list,
+.answer-list,
+.tally {
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+.order-list { counter-reset: order; }
+
+.order-list li,
+.answer-list li,
+.tally li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 3px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  font-weight: 700;
+}
+
+.order-list li { counter-increment: order; justify-content: flex-start; }
+.order-list li::before {
+  content: counter(order);
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--purple);
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.answer-list .who { color: var(--ink-soft); }
+.answer-list .what { font-size: 1.2rem; text-align: right; word-break: break-word; }
+
+/* Voting */
+.vote-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.vote-grid .btn {
+  min-height: 72px;
+  padding: 10px;
+  font-size: 1.15rem;
+  word-break: break-word;
+  border-radius: var(--radius);
+}
+
+.vote-grid .btn:nth-child(5n + 1) { background: var(--pink); }
+.vote-grid .btn:nth-child(5n + 2) { background: var(--blue); }
+.vote-grid .btn:nth-child(5n + 3) { background: var(--green); color: #10302d; }
+.vote-grid .btn:nth-child(5n + 4) { background: var(--orange); color: #2b2140; }
+.vote-grid .btn:nth-child(5n + 5) { background: var(--purple); }
+
+/* Reveal */
+.reveal-who { font-size: 1.3rem; font-weight: 700; }
+
+.q-compare {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 22px;
+  text-align: left;
+}
+
+@media (min-width: 520px) {
+  .q-compare { grid-template-columns: 1fr 1fr; }
+}
+
+.q-box {
+  padding: 14px 16px;
+  border: 3px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+
+.q-box p { margin: 4px 0 0; font-weight: 700; }
+.q-odd { background: var(--pink); color: #fff; }
+
+.q-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.tally li.is-odd { background: var(--yellow); color: #2b2140; }
+.tally .count { font-family: var(--font-display); font-size: 1.4rem; }
+
+.actions { display: grid; gap: 12px; }
