@@ -1,26 +1,20 @@
 /* Home page only */
 
 .hero {
-  padding: 24px 0 28px;
+  padding: 28px 0 32px;
   text-align: center;
 }
 
-.hero h1 span:nth-child(1) { color: var(--pink); }
-.hero h1 span:nth-child(2) { color: var(--orange); }
-.hero h1 span:nth-child(3) { color: var(--green); }
-.hero h1 span:nth-child(4) { color: var(--blue); }
-
 .hero p {
-  max-width: 34ch;
+  max-width: 36ch;
   margin: 0 auto;
-  font-size: 1.2rem;
-  color: var(--ink-soft);
+  color: var(--text-muted);
 }
 
 .game-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 22px;
+  gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -38,40 +32,42 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-top-width: 14px;
+  transition: border-color 0.15s ease;
 }
 
-.game-card[data-color="pink"] { border-top-color: var(--pink); }
-.game-card[data-color="orange"] { border-top-color: var(--orange); }
-.game-card[data-color="green"] { border-top-color: var(--green); }
-.game-card[data-color="blue"] { border-top-color: var(--blue); }
-.game-card[data-color="purple"] { border-top-color: var(--purple); }
+.game-card:hover { border-color: var(--border-strong); }
 
 .game-card .emoji {
-  font-size: 3rem;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 1.6rem;
   line-height: 1;
-  margin-bottom: 10px;
 }
+
+.game-card h2 { margin-bottom: 4px; }
 
 .game-card .meta {
-  margin: 0 0 14px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--ink-soft);
+  margin: 0 0 12px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
 }
 
-.game-card p { flex: 1; }
+.game-card p { flex: 1; color: var(--text-muted); }
 
 .game-card .btn { align-self: stretch; }
 
 .coming-soon {
   min-height: 120px;
   border-style: dashed;
-  border-top-width: 3px;
   background: transparent;
-  box-shadow: none;
   text-align: center;
-  color: var(--ink-soft);
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;

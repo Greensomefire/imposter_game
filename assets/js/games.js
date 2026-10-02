@@ -8,7 +8,6 @@ window.GAMES = [
     slug: "odd-question",
     title: "Odd Question",
     emoji: "🕵️",
-    color: "purple",
     players: "3–12 players",
     description:
       "Everyone answers the same question… except one player, who secretly got a different one. Can you spot the odd one out?",

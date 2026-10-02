@@ -21,7 +21,7 @@
     if (!grid || !Array.isArray(window.GAMES)) return;
 
     window.GAMES.forEach(function (game) {
-      var card = el("article", { class: "card game-card", "data-color": game.color || "purple" }, [
+      var card = el("article", { class: "card game-card" }, [
         el("div", { class: "emoji", "aria-hidden": "true", text: game.emoji || "🎲" }),
         el("h2", { text: game.title }),
         el("p", { class: "meta", text: game.players || "" }),

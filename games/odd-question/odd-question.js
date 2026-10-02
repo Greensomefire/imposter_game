@@ -8,7 +8,6 @@
   var MIN_PLAYERS = 3;
   var MAX_PLAYERS = 12;
   var DECK_KEY = "odd-question:deck";
-  var DOT_COLORS = ["#ff4f8b", "#3a86ff", "#2ec4b6", "#ff9f1c", "#8338ec", "#ffd23f"];
   var EMOJIS = [
     "🐶", "🐱", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐸", "🐵", "🐧", "🐙",
     "🦄", "🐲", "🦖", "🐢", "🦉", "🐝", "🦋", "🐳", "🦀", "🐷", "🐰", "🦔",
@@ -144,7 +143,6 @@
       avatar.type = "button";
       avatar.className = "avatar";
       avatar.textContent = state.avatars[i];
-      avatar.style.background = DOT_COLORS[i % DOT_COLORS.length];
       avatar.setAttribute("aria-label", "Change picture for player " + (i + 1));
       avatar.addEventListener("click", changeAvatar.bind(null, i, avatar));
 
@@ -213,7 +211,7 @@
     state.players.forEach(function (name, i) {
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "btn";
+      btn.className = "btn btn-secondary";
       if (state.answers[i]) {
         btn.className += " is-done";
         btn.disabled = true;

@@ -52,7 +52,7 @@ Either of these works:
 
    Then open <http://localhost:8000/>.
 
-The fonts (Baloo 2 and Nunito) come from Google Fonts. When you're offline, the site falls back to system fonts.
+The font (Inter) comes from Google Fonts. When you're offline, the site falls back to system fonts.
 
 ## Add a new game
 
@@ -85,7 +85,6 @@ The fonts (Baloo 2 and Nunito) come from Google Fonts. When you're offline, the 
      slug: "word-chain",
      title: "Word Chain",
      emoji: "🔗",
-     color: "green",            // pink | orange | green | blue | purple
      players: "2–8 players",
      description: "One short sentence about the game.",
      path: "games/word-chain/index.html"
@@ -94,7 +93,7 @@ The fonts (Baloo 2 and Nunito) come from Google Fonts. When you're offline, the 
 
    The home page builds its card from this entry.
 
-You can use the shared components in `main.css` in any game: `.card`, `.btn` (with the colour variants `.btn-pink`, `.btn-green`, `.btn-blue`, `.btn-yellow` and `.btn-ghost`) and `.btn-block`.
+You can use the shared components in `main.css` in any game: `.card`, `.btn` (the primary action), `.btn-secondary` and `.btn-block`. All colours are CSS variables at the top of `main.css`; reference those rather than writing colour values in a game's stylesheet. See `CLAUDE.md` for the visual style rules.
 
 ### Add Odd Question pairs
 
