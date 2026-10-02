@@ -29,7 +29,7 @@ A small static website with pass-the-phone party games. It is plain HTML, CSS an
         ├── index.html          Game page
         ├── odd-question.css    Styles for this game only
         ├── odd-question.js     Game logic
-        └── questions.js        Question pairs (50 of them)
+        └── questions.js        Question pairs (200 of them)
 ```
 
 Rules the site follows:
