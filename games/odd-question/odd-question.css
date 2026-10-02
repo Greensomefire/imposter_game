@@ -92,24 +92,6 @@
   color: #2b2140;
 }
 
-/* Answer mode */
-.mode-choice { display: grid; gap: 10px; }
-
-.radio {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 56px;
-  padding: 8px 16px;
-  border: 3px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  cursor: pointer;
-}
-
-.radio input { width: 24px; height: 24px; accent-color: var(--purple); }
-.radio:has(input:checked) { background: var(--yellow); color: #2b2140; }
-
 .how-to {
   margin-top: 20px;
   color: var(--ink-soft);
@@ -169,9 +151,7 @@
 .answer-field label { display: block; margin-bottom: 6px; }
 
 /* Answer lists */
-.order-list,
-.answer-list,
-.tally {
+.answer-list {
   margin: 0 0 22px;
   padding: 0;
   list-style: none;
@@ -180,11 +160,7 @@
   text-align: left;
 }
 
-.order-list { counter-reset: order; }
-
-.order-list li,
-.answer-list li,
-.tally li {
+.answer-list li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -196,30 +172,17 @@
   font-weight: 700;
 }
 
-.order-list li { counter-increment: order; justify-content: flex-start; }
-.order-list li::before {
-  content: counter(order);
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--purple);
-  color: #fff;
-  font-size: 0.95rem;
-}
-
 .answer-list .who { color: var(--ink-soft); }
 .answer-list .what { font-size: 1.2rem; text-align: right; word-break: break-word; }
 
-/* Voting */
-.vote-grid {
+/* Player buttons (picking who's next) */
+.player-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
-.vote-grid .btn {
+.player-grid .btn {
   min-height: 72px;
   padding: 10px;
   font-size: 1.15rem;
@@ -227,14 +190,23 @@
   border-radius: var(--radius);
 }
 
-.vote-grid .btn:nth-child(5n + 1) { background: var(--pink); }
-.vote-grid .btn:nth-child(5n + 2) { background: var(--blue); }
-.vote-grid .btn:nth-child(5n + 3) { background: var(--green); color: #10302d; }
-.vote-grid .btn:nth-child(5n + 4) { background: var(--orange); color: #2b2140; }
-.vote-grid .btn:nth-child(5n + 5) { background: var(--purple); }
+.player-grid .btn:nth-child(5n + 1) { background: var(--pink); }
+.player-grid .btn:nth-child(5n + 2) { background: var(--blue); }
+.player-grid .btn:nth-child(5n + 3) { background: var(--green); color: #10302d; }
+.player-grid .btn:nth-child(5n + 4) { background: var(--orange); color: #2b2140; }
+.player-grid .btn:nth-child(5n + 5) { background: var(--purple); }
+
+.player-grid .btn.is-done,
+.player-grid .btn.is-done:disabled {
+  background: var(--surface);
+  color: var(--ink-soft);
+  box-shadow: none;
+  opacity: 1;
+  text-decoration: line-through;
+}
 
 /* Reveal */
-.reveal-who { font-size: 1.3rem; font-weight: 700; }
+.reveal-answer { font-size: 1.2rem; }
 
 .q-compare {
   display: grid;
@@ -265,7 +237,5 @@
   opacity: 0.8;
 }
 
-.tally li.is-odd { background: var(--yellow); color: #2b2140; }
-.tally .count { font-family: var(--font-display); font-size: 1.4rem; }
 
 .actions { display: grid; gap: 12px; }

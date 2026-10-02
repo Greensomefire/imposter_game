@@ -45,97 +45,64 @@
           <ol class="name-list" id="name-list"></ol>
         </div>
 
-        <fieldset class="field mode-choice">
-          <legend class="label">How do you answer?</legend>
-          <label class="radio">
-            <input type="radio" name="answer-mode" value="aloud" checked>
-            <span>Say answers out loud</span>
-          </label>
-          <label class="radio">
-            <input type="radio" name="answer-mode" value="typed">
-            <span>Type answers privately</span>
-          </label>
-        </fieldset>
-
         <button type="button" class="btn btn-pink btn-block" id="start-btn">Start</button>
 
         <details class="how-to">
           <summary>How to play</summary>
           <ol>
-            <li>Pass the phone around. Everyone secretly reads a question.</li>
+            <li>Pass the phone around in any order. Tap your name to secretly read your question.</li>
             <li>One player got a slightly different question. They don't know it!</li>
-            <li>Share your answers, then see the real question.</li>
-            <li>Vote for whoever's answer didn't fit.</li>
+            <li>Type your answer in secret. Then everyone's answers are shown together, along with the real question.</li>
+            <li>Vote out loud on whose answer didn't fit, then reveal the odd one out.</li>
           </ol>
         </details>
       </section>
 
-      <!-- 2. Pass the phone -->
+      <!-- 2a. Pick a player -->
+      <section class="screen card center" id="screen-pick" hidden>
+        <p class="step" id="pick-step"></p>
+        <h2>Who's next?</h2>
+        <p class="hint">Grab the phone and tap your name to see your question in private.</p>
+        <div class="player-grid" id="pick-grid"></div>
+      </section>
+
+      <!-- 2b. Confirm it's the right player -->
       <section class="screen card center" id="screen-pass" hidden>
-        <p class="step" id="pass-step"></p>
         <div class="big-emoji" aria-hidden="true">📱</div>
-        <h2>Pass the phone to <span class="name-tag" id="pass-name"></span></h2>
+        <h2>Are you <span class="name-tag" id="pass-name"></span>?</h2>
         <p class="hint">Make sure nobody else can see the screen.</p>
-        <button type="button" class="btn btn-blue btn-block" id="reveal-btn"></button>
+        <div class="actions">
+          <button type="button" class="btn btn-blue btn-block" id="reveal-btn">Show my question</button>
+          <button type="button" class="btn btn-ghost btn-block" id="pick-back-btn">Not me, go back</button>
+        </div>
       </section>
 
       <!-- 3. Private question -->
       <section class="screen card center secret" id="screen-question" hidden>
         <p class="step"><span id="question-name"></span>, your question is:</p>
         <p class="question-text" id="question-text"></p>
-        <div class="answer-field" id="answer-field" hidden>
+        <div class="answer-field">
           <label for="answer-input">Your answer</label>
           <input type="text" id="answer-input" maxlength="80" autocomplete="off">
         </div>
-        <p class="hint">Remember it, then hide it before passing the phone on.</p>
-        <button type="button" class="btn btn-block" id="hide-btn">Hide my question</button>
+        <p class="hint">Type your answer, then hide it before passing the phone on.</p>
+        <button type="button" class="btn btn-block" id="hide-btn">Save answer &amp; hide</button>
       </section>
 
-      <!-- 4. Answers -->
-      <section class="screen card center" id="screen-answers" hidden>
-        <div class="big-emoji" aria-hidden="true">🗣️</div>
-        <h2 id="answers-heading">Everyone's seen their question!</h2>
-        <div id="answers-aloud">
-          <p>Go round the group and say your answer out loud, in this order:</p>
-          <ol class="order-list" id="order-list"></ol>
-          <p class="hint">Keep it short — no explaining yet!</p>
-        </div>
-        <div id="answers-typed" hidden>
-          <p>Here's what everyone answered:</p>
-          <ul class="answer-list" id="answer-list"></ul>
-        </div>
-        <button type="button" class="btn btn-green btn-block" id="show-main-btn">Reveal the question</button>
-      </section>
-
-      <!-- 5. Main question -->
+      <!-- 4. Question + everyone's answers -->
       <section class="screen card center" id="screen-main" hidden>
-        <p class="step">The question most of you got was:</p>
+        <p class="step">Everyone has answered! The question was:</p>
         <p class="question-text" id="main-question"></p>
-        <p>One of you had a <strong>different</strong> question. Discuss: whose answer doesn't fit?</p>
-        <ul class="answer-list" id="main-answer-list" hidden></ul>
-        <button type="button" class="btn btn-pink btn-block" id="start-vote-btn">Start voting</button>
+        <p>But one of you had a <strong>different</strong> question. Whose answer doesn't fit? Discuss and vote out loud!</p>
+        <ul class="answer-list" id="main-answer-list"></ul>
+        <button type="button" class="btn btn-pink btn-block" id="show-odd-btn">Reveal the odd one out</button>
       </section>
 
-      <!-- 6a. Pass for vote -->
-      <section class="screen card center" id="screen-vote-pass" hidden>
-        <p class="step" id="vote-step"></p>
-        <div class="big-emoji" aria-hidden="true">🗳️</div>
-        <h2>Pass the phone to <span class="name-tag" id="vote-pass-name"></span></h2>
-        <p class="hint">Vote in secret!</p>
-        <button type="button" class="btn btn-blue btn-block" id="vote-ready-btn"></button>
-      </section>
-
-      <!-- 6b. Vote -->
-      <section class="screen card center" id="screen-vote" hidden>
-        <h2><span id="voter-name"></span>, who had the odd question?</h2>
-        <div class="vote-grid" id="vote-grid"></div>
-      </section>
-
-      <!-- 7. Reveal -->
+      <!-- 5. Reveal -->
       <section class="screen card center" id="screen-reveal" hidden>
-        <div class="big-emoji" id="reveal-emoji" aria-hidden="true"></div>
-        <h2 id="reveal-heading"></h2>
-        <p class="reveal-who">The odd one out was <span class="name-tag" id="reveal-odd-name"></span></p>
+        <div class="big-emoji" aria-hidden="true">🕵️</div>
+        <h2>The odd one out was <span class="name-tag" id="reveal-odd-name"></span></h2>
+        <p class="reveal-answer">They answered: <strong id="reveal-odd-answer"></strong></p>
         <div class="q-compare">
           <div class="q-box q-odd">
             <span class="q-label">Their question</span>
@@ -146,8 +113,7 @@
             <p id="reveal-main-question"></p>
           </div>
         </div>
-        <h3>Votes</h3>
-        <ul class="tally" id="tally"></ul>
+        <p class="hint">Did you guess right?</p>
         <div class="actions">
           <button type="button" class="btn btn-pink btn-block" id="again-btn">Play again</button>
           <button type="button" class="btn btn-ghost btn-block" id="change-btn">Change players</button>
